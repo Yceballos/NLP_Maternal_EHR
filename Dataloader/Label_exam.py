@@ -32,14 +32,4 @@ print(sen_std,sen_mean,sen_max,sen_precentile)
 
 # save to disk
 with open('datahc_ner.pkl','wb') as f:
-    pickle.dump(data_hc,f)
-   
-
-           
-
-    
-           
-
-          
-
-           
+    pickle.dump(data_hc,f)           
