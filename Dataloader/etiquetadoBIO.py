@@ -40,10 +40,10 @@ def etiquetado(name, cas, layer):
            rangoS= anotacion[0] 
            for item, i in enumerate(spans):
                
-              if rangoS[0]== i: #if el span_beginning= span(i) -> B-entidad
+              if rangoS[0]== i: #if el span_beginning= span(i) -> B-entity
                   etiquetasbio[item]=('B-' + str(anotacion[1]))
               
-              elif rangoS[0] < i < rangoS[1]: #if el span(i) is contained on spans(inicio y final) -> I-entidad 
+              elif rangoS[0] < i < rangoS[1]: #if el span(i) is contained on spans(inicio y final) -> I-entity
                   etiquetasbio[item]=('I-' + str(anotacion[1]))
               
            arreglo=np.transpose(np.vstack((tokens,etiquetasbio)))
