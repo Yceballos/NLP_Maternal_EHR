@@ -4,11 +4,13 @@ Created on Sat Apr  2 14:48:43 2022
 
 @author: Dul
 """
-
 from cassis import *
 import numpy as np
 
 Samples={}
+data_hc={}
+arreglos=[]
+longitud=[]
 
 def etiquetado(name, cas, layer):
     # name is the document name
@@ -17,13 +19,15 @@ def etiquetado(name, cas, layer):
 
     ListAnotaciones=[]
     
-    for data in cas.select(layer): #take entities from cas
-        lista = [[data.begin, data.end], data.Value, data.get_covered_text().split()] #format xmi
+    for data in cas.select(layer): ##take entities from cas
+        lista = [[data.begin, data.end], data.Value, data.get_covered_text().split()]
         ListAnotaciones.append(lista)
-
+        
+     
     TokensI = "de.tudarmstadt.ukp.dkpro.core.api.segmentation.type.Token"
     tokens=[]
-    spans=[] #beginning spans to labbel BIO
+
+    spans=[] #take beginning spans for BIO
     for s in cas.select(TokensI):
         tokens.append(s.get_covered_text())
         spans.append(s.begin) 
@@ -40,14 +44,23 @@ def etiquetado(name, cas, layer):
            rangoS= anotacion[0] 
            for item, i in enumerate(spans):
                
-              if rangoS[0]== i: #if el span_beginning= span(i) -> B-entity
+              if rangoS[0]== i: #if el span_beginning= span(i) -> B-entidad
                   etiquetasbio[item]=('B-' + str(anotacion[1]))
               
-              elif rangoS[0] < i < rangoS[1]: #if el span(i) is contained on spans(inicio y final) -> I-entity
+              elif rangoS[0] < i < rangoS[1]: #if el span(i) is contained on spans(inicio y final) -> I-entidad 
                   etiquetasbio[item]=('I-' + str(anotacion[1]))
-              
-           arreglo=np.transpose(np.vstack((tokens,etiquetasbio)))
+             
+        arreglo=np.transpose(np.vstack((tokens,etiquetasbio)))
+        sample = {}
+        for i,(s,l) in enumerate(zip(tokens,etiquetasbio)):
+            sample['sentence']= tokens
+            sample['labels']= etiquetasbio
+            data_hc[name] = sample
+            sent_len=len(tokens)
+        
+        longitud.append(sent_len)
         
         Samples[name]=arreglo #Dictionary
-        
-    return Samples, ListAnotaciones
+       
+   # return Samples, ListAnotaciones, tokens
+    return data_hc, longitud 
