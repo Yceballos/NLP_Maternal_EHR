@@ -14,9 +14,12 @@ for root, dirs, files in docs:
            arc_zip.append(os.path.join(name))
     
     for i in range(len(dirs)):
-        contenido = os.chdir("/home/yasmin/Desktop/TG/Curacion BIO/curation/{}".format(dirs[i]))
+        content = os.chdir("/home/yasmin/Desktop/TG/Curacion BIO/curation/{}".format(dirs[i]))
         with ZipFile(arc_zip[i], 'r') as zip:
             zip.extractall()
+        # with os.scandir(content) as ficheros:
+        #     for fichero in ficheros:
+        #         print(fichero.name)
         
         now_name = os.path.join("/home/yasmin/Desktop/TG/Curacion BIO/curation/{}".format(dirs[i]), 
                                 "CURATION_USER.xmi")
