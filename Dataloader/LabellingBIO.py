@@ -1,9 +1,12 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sat Apr  2 14:48:43 2022
+Created on Fri May 20 11:27:45 2022
 
-@author: Dul
+@author: User
 """
+
+##Sentenceias 
+
 from cassis import *
 import numpy as np
 
@@ -12,7 +15,7 @@ data_hc={}
 arreglos=[]
 longitud=[]
 
-def etiquetado(name, cas, layer):
+def label(name, cas, layer):
     # name is the document name
     # cas is the document .xmi
     # layer is the layer of the annotations (we have two different annotations)
@@ -32,35 +35,35 @@ def etiquetado(name, cas, layer):
         tokens.append(s.get_covered_text())
         spans.append(s.begin) 
         
-    etiquetasbio= ['O']*len(spans)
+    BIOlabel= ['O']*len(spans)
     
     if len(ListAnotaciones)==0:
-        arreglo=np.transpose(np.vstack((tokens,etiquetasbio)))
-        Samples[name]=arreglo
+        arra=np.transpose(np.vstack((tokens,BIOlabel)))
+        Samples[name]=arra
     
     else:
-        for anotacion in ListAnotaciones:
+        for anotation in ListAnotaciones:
            
-           rangoS= anotacion[0] 
+           rangoS= anotation[0] 
            for item, i in enumerate(spans):
                
               if rangoS[0]== i: #if el span_beginning= span(i) -> B-entidad
-                  etiquetasbio[item]=('B-' + str(anotacion[1]))
+                  BIOlabel[item]=('B-' + str(anotation[1]))
               
               elif rangoS[0] < i < rangoS[1]: #if el span(i) is contained on spans(inicio y final) -> I-entidad 
-                  etiquetasbio[item]=('I-' + str(anotacion[1]))
+                  BIOlabel[item]=('I-' + str(anotation[1]))
              
-        arreglo=np.transpose(np.vstack((tokens,etiquetasbio)))
+        arra=np.transpose(np.vstack((tokens,BIOlabel)))
         sample = {}
-        for i,(s,l) in enumerate(zip(tokens,etiquetasbio)):
+        for i,(s,l) in enumerate(zip(tokens,BIOlabel)):
             sample['sentence']= tokens
-            sample['labels']= etiquetasbio
+            sample['labels']= BIOlabel
             data_hc[name] = sample
             sent_len=len(tokens)
         
         longitud.append(sent_len)
         
-        Samples[name]=arreglo #Dictionary
+        Samples[name]=arra #Dictionary
        
    # return Samples, ListAnotaciones, tokens
-    return data_hc, longitud 
+    return data_hc, longitud  
