@@ -1,0 +1,14 @@
+tensorflow==1.15
+pytorch==1.5
+transformers==2.10
+gensim==3.8.3
+spacy==2.2.3
+nervaluate==0.1.7
+tensorflow==1.15
+pytorch==1.5
+transformers==2.10
+gensim==3.8.3
+spacy==2.2.3
+nervaluate==0.1.7
+pytorch-lightning
+
