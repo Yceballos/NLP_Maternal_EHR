@@ -149,6 +149,9 @@ class PretrainDataset(Dataset):
         # labels[891][95]='B-Sustancia'#token: hb 
         # labels[1083][150]='B-Atributo'#token: escasos
         
+        ###1372 total sentences
+        indexes=[]
+        indexes=[i for i, row in enumerate(sentences) if (row==["."] and len(row)==1)]
         
         labels2=copy.deepcopy(labels) 
 
