@@ -8,3 +8,6 @@ To fine tune the pretrained NER model, use the direct link for the bsc-bio-ehr-e
 
 __________________________________________________________________________________________________________________________________________________________
 # Dataloader
+This model has implemented data processing, then first model creans data with misspelling correction
+
+then you need to adapt data to the model, then first we extract all information with cassis library https://cassis.readthedocs.io/en/latest/api.html
